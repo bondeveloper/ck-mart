@@ -3,9 +3,51 @@
 <html>
     <head>
         <title>CKMart</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=1, minimum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+        <script type="text/javascript">
+			const user = '{{ request.user }}'
+			function getToken(name) {
+				let cookieValue = null;
+				if (document.cookie && document.cookie !== '') {
+					const cookies = document.cookie.split(';');
+					for (let i = 0; i < cookies.length; i++) {
+						const cookie = cookies[i].trim();
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) === (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+			const csrftoken = getToken('csrftoken');
+
+			function getCookie(name) {
+				let cookieValue = null;
+				if (document.cookie && document.cookie !== '') {
+					const cookies = document.cookie.split(';');
+					for (let i = 0; i < cookies.length; i++) {
+						const cookie = cookies[i].trim();
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) === (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+
+			let cart = JSON.parse( getCookie('cart') );
+
+			if( cart == undefined ) {
+				cart = {}
+				document.cookie = `cart=${JSON.stringify(cart)};domain=;path=/`;
+			}
+        </script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,7 +68,7 @@
                     <a href="{% url 'cart' %}">
                         <img class="cart-icon" src="{% static 'images/cart.png' %}" />
                     </a>
-                    <p class="cart-total">0</p>
+                    <p class="cart-total">{{cartItems}}</p>
                 </div>
               </div>
             </div>
@@ -38,5 +80,6 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-    </body>
+        <script type="text/javascript" src="{% static 'js/cart.js' %}" ></script>
+      </body>
 </html>

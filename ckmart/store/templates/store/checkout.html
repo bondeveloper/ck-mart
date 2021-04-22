@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="box-element form-wrapper">
-                <form>
+                <form action="https://sandbox.payfast.co.za​/eng/process" method="post">
+                    {% csrf_token %}
+
                     <div class="user-info">
                         <div class="form-field">
                             <input type="text" class="form-control" name="name" placeholder="Name ...">
@@ -17,27 +19,28 @@
                             <input type="text" class="form-control" name="phone" placeholder="Phone ...">
                         </div>
                     </div>
-                   <div class="shipping-info">
+                    <div class="shipping-info">
                         <p>Shipping Information</p>
                         <div class="form-field">
-                            <input type="address" class="form-control" name="address" placeholder="Address ...">
+                            <input type="address" class="form-control" name="address" placeholder="Address ..." required>
                         </div>
                         <div class="form-field">
-                            <input type="apartment" class="form-control" name="apartment" placeholder="Apartment, suite, etc ( Optional ) ...">
+                            <input type="apartment" class="form-control" name="apartment" placeholder="Apartment, suite, etc ( Optional ) ..." required>
                         </div>
                         <div class="form-field">
-                            <input type="city" class="form-control" name="city" placeholder="City ...">
+                            <input type="city" class="form-control" name="city" placeholder="City ..." required>
                         </div>
                         <div class="form-field">
-                            <input type="number" class="form-control" name="postcost" placeholder="Postal Code">
+                            <input type="number" class="form-control" name="postcost" placeholder="Postal Code" required>
                         </div>
-                   </div>
-                    <input type="submit" class="btn btn-primary btn-block" value="Continue" name="form-button   " />
+                    </div>
+                    <input type="submit" class="btn btn-primary btn-block button-cta" value="Continue" name="form-button" />
                   </form>
             </div>
             <br>
-            <div class="box-element  hidden" class="payment-info">
-                <small>Paypal Options</small>
+            <div class="box-element payment-info hidden" class="form">
+                <small>Payment Options</small>
+                <div id="paypal-button-container"></div>
             </div>
         </div>
         <div class="col-lg-6">
@@ -46,17 +49,97 @@
                 <hr>
                 <h4>Order summary</h4>
                 <hr>
+                {% for item in items %}
                 <div class="cart-row">
-                    <div style="flex: 2">
-                        <img class="row-image" src="{% static 'images/placeholder.png' %}" />
-                    </div>
-                    <div style="flex: 2"><p>Product 1</p></div>
-                    <div style="flex: 1"><p>R300</p></div>
-                    <div style="flex: 1"><p>$150</p></div>
+                    
+                    <div style="flex: 2"><img class="row-image" src="{{ item.product.imageURL }}"/></div>
+                    <div style="flex: 1"><p>{{ item.product.name }}</p></div>
+                    <div style="flex: 1"><p>R {{ item.product.price|floatformat:2 }}</p></div>
+                    <div style="flex: 1"><p>{{ item.quantity }}</p></div>
                 </div>
-                <h5>Items: 3</h5>  
-                <h5>Price: R500</h5>    
+                {% endfor %}
+                <h5>Items: {{ order.get_cart_items }}</h5>  
+                <h5>Price: {{ order.get_cart_total|floatformat:2 }}</h5>    
             </div>
         </div>
     </div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AeSxqn0hQZj7MDlnHWF5361pRks3RB_gWh8yCmm98ZiP3F8-sqh9iLNLLly3RMC03NYTI0PGy7xh7m7n&currency=USD"></script>
+
+
+<script type="text/javascript" >
+    let shipping = '{{ order.shipping }}';
+
+    const hiddenClassName = 'hidden';
+    let form = document.querySelector('form');
+
+    if ( shipping == 'False' ) {
+
+        let element = document.getElementsByClassName('shipping-info')[0];
+        if ( !element.classList.contains( hiddenClassName ) ) {
+            element.classList.add(hiddenClassName);
+        }
+    }
+
+    if ( user != 'AnonymousUser') {
+        document.getElementsByClassName('user-info')[0].classList.add(hiddenClassName);
+    }
+
+    if ( shipping == 'False') {
+        document.getElementsByClassName('form-wrapper')[0].classList.add(hiddenClassName);
+    }
+
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+        validateForm( form );
+        if( validateForm( form ) ) {
+            document.getElementsByName('form-button')[0].classList.add(hiddenClassName);
+            document.getElementsByClassName('payment-info')[0].classList.remove(hiddenClassName);
+        }
+    });
+
+    const validateForm = form => {
+
+        for( let prop of form ) {
+            if ( prop.required && ( prop.value == '' ||  prop.value == null ) ) {
+                return false
+            }
+        }
+        return true;
+    }
+
+    const submitFormData = () => {
+        let formObj = new FormData( form );
+        let formData = {}
+
+        for ( let entry of formObj.entries()) {
+            formData[entry[0]] = entry[1]
+        }
+
+        formData['total'] = total;
+
+        const url = '/process_order/';
+        fetch( url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': formData['csrfmiddlewaretoken']
+            },
+            body: JSON.stringify({'data': formData})
+        })
+        .then( res => res.json() )
+        .then( data => {
+            console.log(`Success: ${ data }`);
+            alert('Transaction completed')
+            cart = {}
+            document.cookie = `cart=${JSON.stringify( cart )};domain=;path=/`;
+            window.location.href = "{% url 'store' %}";
+        });
+    }
+
+    let total = "{{ order.get_cart_total }}"; // this total is used in the paypal file.
+</script>
+
+<script src="{% static 'js/payment-paypal.js' %}"></script>
+
 {% endblock content %}
