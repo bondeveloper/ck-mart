@@ -68,12 +68,12 @@
 
 
 <script type="text/javascript" >
-    let shipping = '{{ order.shipping }}';
+    let canShip = '{{ order.canShip }}';
 
     const hiddenClassName = 'hidden';
     let form = document.querySelector('form');
 
-    if ( shipping == 'False' ) {
+    if ( canShip == 'False' ) {
 
         let element = document.getElementsByClassName('shipping-info')[0];
         if ( !element.classList.contains( hiddenClassName ) ) {
@@ -85,7 +85,7 @@
         document.getElementsByClassName('user-info')[0].classList.add(hiddenClassName);
     }
 
-    if ( shipping == 'False') {
+    if ( canShip == 'False') {
         document.getElementsByClassName('form-wrapper')[0].classList.add(hiddenClassName);
     }
 

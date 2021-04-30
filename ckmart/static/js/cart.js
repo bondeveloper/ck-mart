@@ -8,13 +8,12 @@ for ( i = 0; i < updateBtn.length; i++ ) {
             addCookieItem( productId, action );
         }else {
             updateUserOrder( productId, action );
-
         }
     })
 }
 
 const updateUserOrder = ( productId, action ) => {
-    const url = '/update_item/';
+    const url = '/store/update_item/';
 
     fetch( url, {
         method: 'POST',
@@ -36,6 +35,8 @@ const updateUserOrder = ( productId, action ) => {
 }
 
 const addCookieItem = ( productId, action ) => {
+    console.log(`Product: ${productId}`)
+    console.log(`Action: ${action}`)
     if ( action == 'add' ) {
         if ( cart[productId] == undefined) {
             cart[productId] = { 'quantity': 1 };

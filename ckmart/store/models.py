@@ -1,20 +1,13 @@
+import uuid
 from django.db import models
-from django.contrib.auth.models import User
-# Create your models here.
 
-class Customer( models.Model ):
-    user = models.OneToOneField( User, null=True, blank=True, on_delete=models.CASCADE )
-    name = models.CharField( max_length=200, null=True )
-    email = models.EmailField( max_length=200 )
-
-    def __str__(self):
-        return self.name
+from accounts.models import Account
 
 
 class Product( models.Model ):
     name = models.CharField( max_length=200 )
+    description = models.CharField( null=True, blank=True, max_length=200 )
     price = models.DecimalField( max_digits=7, decimal_places=2 )
-    digital = models.BooleanField( default=False, null=True, blank=True)
     image = models.ImageField( default='placeholder.png', blank=True )
 
     def __str__( self ):
@@ -30,34 +23,37 @@ class Product( models.Model ):
         return url
 
 
-class ShippingAddress( models.Model ):
-    customer = models.ForeignKey( Customer, null=True, blank=True, on_delete=models.SET_NULL )
-    address = models.CharField( max_length=200, null=True, blank=True )
-    city = models.CharField( max_length=200, null=True, blank=True )
-    postal_code = models.CharField( max_length=200, null=True, blank=True )
-    date_added = models.DateField( auto_now_add=True )
-
-    def __str__( self ):
-        return self.address
-
-
 class Order( models.Model ):
-    customer = models.ForeignKey( Customer, null=True, blank=True, on_delete=models.SET_NULL )
+    transaction_id = models.UUIDField( default=uuid.uuid4, editable=False, unique=True )
+    account = models.ForeignKey( Account, null=True, blank=True, on_delete=models.SET_NULL )
     date_ordered = models.DateField( auto_now_add=True )
     complete = models.BooleanField( default=False )
-    transaction_id = models.CharField(max_length=100, null=True )
-    shipping_address = models.ForeignKey( ShippingAddress, null=True, blank=True, on_delete=models.SET_NULL )
+    
+    STATUS = (
+        ('UP', 'Un Processed'),
+        ('P', 'Paid'),
+        ('PR', 'Processing'),
+        ('HC', 'Handed to Courier'),
+        ('OD', 'Out on delivery'),
+        ('D', 'Delivered'),
+        ('C', 'Cancelled')
+    )
+    status = models.CharField( max_length=3, choices=STATUS, default='UP' )
 
     def __str__( self ):
         return str( self.transaction_id )
+
+    def __unicode__( self ):
+        return str( self.transaction_id )
+
     @property
-    def shipping( self ):
-        shipping = False
+    def canShip( self ):
+        shouldShip = False
         orderitems = self.orderitem_set.all()
 
         if orderitems:
-            shipping = True
-        return shipping
+            shouldShip = True
+        return shouldShip
 
     @property
     def get_cart_total( self ):
@@ -72,11 +68,35 @@ class Order( models.Model ):
         return total
 
 
+class Shipping( models.Model ):
+    order = models.ForeignKey( Order, on_delete=models.CASCADE )
+    recipient_name = models.CharField( max_length=200 )
+    contact_number = models.CharField( max_length=50 )
+    address_line1 = models.CharField( max_length=200 )
+    address_line2 = models.CharField( max_length=200, null=True, blank=True )
+    surburb = models.CharField( max_length=200 )
+    city = models.CharField( max_length=200 )
+    postal_code = models.CharField( max_length=200 )
+    instructions = models.CharField( max_length=200, null=True, blank=True)
+
+    def __str__( self ):
+        return self.order.__str__() + " : " + self.recipient_name
+
+
 class OrderItem( models.Model ):
     product = models.ForeignKey( Product, null=True, on_delete=models.SET_NULL )
     order = models.ForeignKey( Order, null=True, on_delete=models.SET_NULL )
     quantity = models.IntegerField( default=0, null=True, blank=True )
     date_added = models.DateField( auto_now_add=True )
+
+    class Meta:
+        # models.UniqueConstraint(fields=['product', 'order'], name='unique_order_item')
+        constraints = [
+            models.UniqueConstraint(fields=['product', 'order'], name='unique_order_item')
+        ]
+
+    def __str__( self ):
+        return self.product.name
 
     @property
     def get_total( self ):

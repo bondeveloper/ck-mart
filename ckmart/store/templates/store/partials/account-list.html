@@ -1,0 +1,49 @@
+{% load static %}
+
+<div class="ck-menu-drop ck-menu-item">
+    <button class="ck-button ck-button-primary ck-menu-drop-button">
+        <div class="ck-nav-item-line-1-wrapper">
+            <span class="ck-nav-item-line-1">Hello, 
+            {% if user.is_authenticated %}
+            {{ user.first_name }}
+            {% else %}
+            Sign-In
+            {% endif %}
+            </span>
+        </div>
+        <div class="ck-nav-item-line-2-wrapper">
+            <span class="ck-nav-item-line-2">
+            Account & More    
+            <i class="ck-arrow ck-down-arrow"></i>
+            </span>
+        </div>
+    </button>
+    <div class="ck-menu-drop-content">
+        <div class="ck-menu-drop-content-wrapper">
+            <div class="ck-menu-drop-content-1">
+                <span class="ck-title">More</span>
+            </div>
+            <div class="ck-menu-drop-divider"></div>
+            <div class="ck-menu-drop-content-2">
+                <span class="ck-title">Account</span>
+                <div class="ck-account-menu-wrapper">
+                    <ul class="ck-account-menu">
+                        <li class="ck-account-menu-item">Orders</li>
+                        {% if user.is_authenticated %}
+                            <li class="ck-account-menu-item">
+                                <a href="{% url 'logout' %}" class="ck-account-menu-button">Sign-Out</a>
+                            </li>
+                        {% else %}
+                        <li class="ck-account-menu-item">
+                            <a href="{% url 'login' %}" class="ck-account-menu-button">Sign-In</a>
+                        </li>
+                        {% endif %}
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 

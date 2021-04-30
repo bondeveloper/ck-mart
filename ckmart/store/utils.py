@@ -41,11 +41,19 @@ def cookieCart ( request ):
     return { 'items': items, 'order': order, 'cartItems': cartItems }
 
 def cartData( request ):
+
     if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create( customer=customer, complete=False )
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
+        account = request.user
+        try:
+            order = Order.objects.get( account=account )
+            items = order.orderitem_set.all()
+            cartItems = order.get_cart_items
+        except: 
+            print('error occured')
+            order = None
+            items = None
+            cartItems = 0
+
     else:
         cookieData = cookieCart( request )
         items = cookieData['items']

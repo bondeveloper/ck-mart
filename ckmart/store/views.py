@@ -5,6 +5,7 @@ import json
 import datetime
 from .utils import cartData
 
+
 def store( request ):
     data = cartData( request )
     cartItems = data['cartItems']
@@ -36,10 +37,11 @@ def updateItem( request ):
     productId = data.get('productId')
     action = data.get('action')
 
-    customer = request.user.customer
+    account = request.user 
     product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(account=account, complete=False)
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+
     if action == 'add':
         orderItem.quantity = (orderItem.quantity + 1)
     elif action == 'remove':
@@ -53,27 +55,31 @@ def updateItem( request ):
     return JsonResponse('Item was added', safe=False)
 
 def processOrder( request ):
-    transaction_id = datetime.datetime.now().timestamp()
     data = json.loads( request.body )
 
     if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        total = float( data.get('data').get('total') )
-        order.transaction_id = transaction_id
+        account = request.user
+        try:
+            order = Order.objects.get(account=account)
+            order.transaction_id = datetime.datetime.now().timestamp()
 
-        if total == order.get_cart_total:
-            order.complete = True
-        order.save()
+            if float( data.get('data').get('total') ) == order.get_cart_total:
+                order.complete = True
 
-        if order.shipping == True:
-            ShippingAddress.objects.create(
-                customer=customer,
-                order=order,
-                address=data.get('data').get('address'),
-                city=data.get('data').get('city'),
-                postal_code=data.get('data').get('postal_code')
-            )
+            order.save()
+
+            if order.shipping == True:
+                ShippingAddress.objects.create(
+                    account=account,
+                    order=order,
+                    address=data.get('data').get('address'),
+                    city=data.get('data').get('city'),
+                    postal_code=data.get('data').get('postal_code')
+                )
+        except:
+            print('process order error occured')
+
+       
     else:
         print('User is not logged in!')
     return JsonResponse('Payment complete', safe=False)
