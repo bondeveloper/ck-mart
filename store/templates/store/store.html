@@ -1,0 +1,36 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <div class="ck-store-container">
+        <div class="ck-content-wrapper">
+            <div class="ck-store-products-container">
+                <div class="ck-store-product-filters">
+                <span class="ck-title">Filters</span>
+                </div>
+                <div class="ck-store-product-divider"></div>
+                <div class="ck-store-products-wrapper">
+                    {% for product in products %}
+                    <div class="ck-store-product-wrapper">
+                        <div class="ck-store-product-brand-wrapper">
+                            <a href="{% url 'product' product.id %}">
+                                <img class src="{{ product.imageURL }}" />
+                            </a>
+                        </div>
+                        <div class="ck-store-product-description-wrapper">
+                            <div class="ck-store-product-description-container">
+                                <a class="ck-link" href="{% url 'product' product.id %}">
+                                    <span class="ck-title ck-title-3">{{ product.name}}
+                                                                        ,ajkdshfkjhfdnbdfjksgnlb ermnmxb,kreg b,tknh.h
+                                    dlfgksmdfng,ksdnghkjg</span>
+                                </a>
+                                <p>{{ product.description }} </p>
+                                <span>R {{ product.price }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

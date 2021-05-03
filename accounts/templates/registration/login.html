@@ -1,0 +1,60 @@
+{% extends 'accounts/main.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="login-auth-panel">
+        <div class="ck-has-error">
+            {% for key, error in form.errors.items %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        <h3>Sign-In</h3>
+        <input hidden value="{{ user }} " />
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group"> 
+                {{ form.username.label }}
+                {{ form.username }}
+            </div>
+
+                <div class="form-group"> 
+                {{ form.password.label }}
+                {{ form.password }}
+            </div>
+
+            <button class="ck-button ck-button-lg ck-button-primary">Continue</button>
+        </form>
+    </div>
+</div>
+<div class="signup-connect-wrapper">
+    <div class="ck-connect-wrapper">
+        <div class="ck-connect">
+            <div class="ck-connect-line ck-margin-r line-sm"></div>
+            <label class="ck-connect-label">Don't have an Account?</label>
+            <div class="ck-connect-line ck-margin-l line-sm"></div>
+        </div> 
+        <a class="ck-button ck-button-lg ck-button-default" href="{% url 'register' %}">Create an Account</a>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+var fields = document.querySelector('form').getElementsByTagName('input');
+
+for ( var field of fields ) {
+    field.classList.add('form-element');
+}
+var a = "{{ user }}";
+console.log(a)
+
+</script>
+
+{% endblock %}
+

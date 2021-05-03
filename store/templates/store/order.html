@@ -1,0 +1,26 @@
+{% extends 'store/main.html' %}
+
+{% block content %}
+<div class="ck-order-container">
+    <div class="ck-content-wrapper">
+        <div class="ck-order-wrapper">
+            <div class="ck-order-items-wrapper">
+                {% for item in items %}
+                <div class="ck-order-item-wrapper">
+                    <div class="order-item-brand-wrapper">
+                        <img src="{{ item.product.imageURL }}"/>
+                    </div>
+                    <div class="order-item-content-wrapper">
+                        <span class="ck-title ck-title-2">{{ item.product.name }}</span>
+                        <span >Qty: {{ item.quantity }}</span>
+                        <span >R {{ item.get_total }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
