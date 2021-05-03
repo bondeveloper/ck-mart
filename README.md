@@ -26,11 +26,12 @@ Online platform that sells products that are inspired by Chinese and Korean dram
 * intergrate payU - sandbox
 * link payment to user account
 
-## (View Site here)[]
+## [View Site here](https://ckmart.herokuapp.com)
 
 
 ## Setup
 * clone the repo to your local
+* copy .env.example to /ckmart/.env
 * activate venv
 * make and run migrations by the running these commands
 
