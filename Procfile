@@ -1,0 +1,1 @@
+web: gunicorn ckmart.wsgi --log-file -
