@@ -60,7 +60,7 @@ h1,h2,h3,h4,h5,h6{
 	color: var(--white);
 }
 
-.ck-button-primary {
+.ck-button-secondary {
     background: var(--secondary);
     color: var(--white);
 }
@@ -264,6 +264,16 @@ h1,h2,h3,h4,h5,h6{
 	font-weight: 700;
 }
 
+.ck-title-3 {
+	font-size: 30px;
+}
+.ck-title-2 {
+	font-size: 20px;
+}
+.ck-title-2 {
+	font-size: 15px;
+}
+
 .ck-account-menu-item {
 	margin: 3px 0;
 }
@@ -312,4 +322,246 @@ h1,h2,h3,h4,h5,h6{
 
 .ck-menu-brand {
 	margin: 0;
+}
+
+.ck-container {
+	background: var(--white);
+	min-height: 100vh;
+}
+
+.ck-store-product-filters {
+	width: 20%;
+	height: 400px;
+}
+
+.ck-store-products-container {
+	margin: auto;
+	width: 80%;
+	overflow: auto;
+	display: flex;
+}
+
+.ck-store-products-wrapper {
+	width: 78%;
+}
+
+.ck-store-product-wrapper {
+	height: 215px;
+	border-bottom: 2px solid #ccc;
+	margin: 10px 15px;
+	display: flex;
+}
+
+.ck-store-product-brand-wrapper {
+	position: relative;
+	width: 40%;
+	height: 100%;
+}
+
+.ck-store-product-brand-wrapper a{
+	position: absolute;
+	width: 300px;
+	height: 100%;
+}
+
+
+.ck-store-product-brand-wrapper img {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+}
+
+.ck-store-product-description-wrapper {
+	/* flex-grow: 3; */
+	width: 60%;
+	height: 100%;
+}
+
+.ck-store-product-description-container {
+	padding: 10px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+
+.ck-store-product-description-container a{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+
+
+.ck-store-product-divider {
+	background: rgba(0, 78, 0, .3);
+	height: 500px;
+	width: 2px;
+	align-self: center;
+	margin:0 17px;
+}
+
+.ck-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.ck-link:hover {
+	color: rgba(0, 78, 0, .5);
+}
+
+
+.ck-product-wrapper {
+	margin: auto;
+	width: 80%;
+	overflow: auto;
+	display: flex;
+	min-height: 500px;
+}
+
+.ck-product-brand-wrapper {
+	width: 40%;
+	height: 500px;
+	position: relative;
+}
+
+.ck-product-brand-wrapper img {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+}
+
+.ck-product-description-wrapper {
+	width: 50%;
+	height: 900px;
+	margin-left: 10px;
+}
+
+.ck-product-cart-wrapper {
+	width: 10%;
+	height: 150px;
+	border: 1px solid rgba(0, 78, 0, .3);
+	border-radius: 6px;
+	padding: 10px;
+	margin-left: 10px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.ck-product-descripion-horizontal-divider {
+	height: 2px;
+	border: 1px solid rgba(0, 78, 0, .5);
+}
+
+.ck-product-description-container-1 {
+	min-height: 60px;
+}
+
+.ck-product-description-container-1,
+.ck-product-description-container-2,
+.ck-product-description-container-3 {
+
+	padding-top: 10px;
+	margin-bottom: 10px;
+}
+
+.ck-product-description-container-3-wrapper{
+	margin-top: 20px;
+}
+
+.ck-mg-btm-3 {
+	margin-bottom: 3px;
+}
+
+
+.ck-product-cart-wrapper span {
+	display: block;
+}
+
+.ck-product-cart-button {
+	border-radius: 10px;
+	margin-top: 10px;
+}
+
+.ck-product-cart-qty {
+	margin: 10px 0;
+}
+
+.ck-input {
+	width: 100%;
+}
+
+.ck-orders-wrapper {
+	margin: auto;
+	width: 80%;
+	overflow: auto;
+	display: flex;
+	min-height: 500px;
+	display: flex;
+	flex-direction: column;
+}
+
+.ck-orders-list-wrapper {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.ck-orders-order-wrapper {
+	min-height: 40px;
+	width: 80%;
+	margin: 10px 0;
+	text-decoration: none;
+	color: inherit;
+	line-height: 2;
+	box-shadow: 0 2px 14px rgba(0, 78, 0, .3);
+	display: flex;
+	justify-content: space-between;
+	padding: 0 30px;
+}
+
+.ck-orders-order-wrapper:hover {
+	color: inherit;
+}
+
+.ck-order-wrapper {
+	margin: auto;
+	width: 80%;
+	overflow: auto;
+	display: flex;
+}
+
+.ck-order-items-wrapper {
+	min-height: 200px;
+	border: 1px solid #ccc;
+	width: 80%;
+}
+
+.ck-order-item-wrapper {
+	display: flex;
+	height: 160px;
+	padding: 20px;
+}
+
+.order-item-brand-wrapper {
+	flex-grow: 1;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.order-item-brand-wrapper img{
+	/* position: absolute; */
+	width: 300px;
+	height: 100%;
+	padding: 10px;
+}
+
+.order-item-content-wrapper {
+	flex-grow: 3;
+	box-sizing: border-box;
+	padding: 5px 0 0 10px;
+	display: flex;
+	flex-direction: column;
 }

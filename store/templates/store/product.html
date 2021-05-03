@@ -1,0 +1,35 @@
+{% extends 'store/main.html' %}
+
+{% block content %}
+<div class="ck-product-container">
+    <div class="ck-content-wrapper">
+        <div class="ck-product-wrapper">
+            <div class="ck-product-brand-wrapper">
+                <img src="{{ product.imageURL }}"/>
+            </div>
+            <div class="ck-product-description-wrapper">
+                <div class="ck-product-description-container-1">
+                    <span class="ck-title ck-title-3">{{ product.name }} </span>
+                </div>
+                <div class="ck-product-descripion-horizontal-divider"></div>
+                <div class="ck-product-description-container-2">
+                    <span>Price: R {{ product.price | floatformat:2 }} </span>
+                </div>
+                <div class="ck-product-descripion-horizontal-divider"></div>
+                <div class="ck-product-description-container-3">
+                    <span class="ck-title ck-title-2">About this product</span>
+                    <p class="ck-product-description-container-3-wrapper">{{ product.description }} </p>
+                </div>
+            </div>
+            <div class="ck-product-cart-wrapper">
+                
+                <span class="ck-title ck-title-1 ck-mg-btm-3">In Stock</span>
+                <input class="ck-input ck-product-cart-qty" name="product-qty" type="number" placeholder="qty" min=0>
+                <button class="ck-button ck-button-primary-outline ck-product-cart-button add-btn update-cart"
+                    data-product="{{ product.id }}" data-action="add"
+                >add to cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

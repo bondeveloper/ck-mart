@@ -1,0 +1,41 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+ <div class="auth-wrapper">
+    <div class="register-auth-panel">
+        <div class="ck-has-error">
+            {% for key, error in form.errors.items %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        <h3>Person Details</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group"> 
+                {{ form.email.label }}
+                {{ form.email }}
+            </div>
+            {% if not form.is_active %}
+            <div class="form-group"> 
+                <span>email pending verification</span>
+            </div>
+            {% endif %}
+
+            <div class="form-group"> 
+                <label>First Name</label>
+                {{ form.first_name }}
+            </div>
+
+            <div class="form-group"> 
+                <label>Last Name</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group"> 
+                <label>Phone</label>
+                {{ form.phone }}
+            </div>
+            <button type="submit" class="ck-button ck-button-lg ck-button-primary">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

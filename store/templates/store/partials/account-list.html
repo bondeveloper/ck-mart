@@ -22,14 +22,26 @@
         <div class="ck-menu-drop-content-wrapper">
             <div class="ck-menu-drop-content-1">
                 <span class="ck-title">More</span>
+                <div class="ck-account-menu-wrapper">
+                    <ul class="ck-account-menu">
+                    {% if user.is_authenticated %}
+                        <li class="ck-account-menu-item">
+                            <a href="{% url 'orders' %}" class="ck-account-menu-button">Orders</a>
+                        </li> 
+                    {% endif%}
+                                    
+                    </ul>
+                </div>
             </div>
             <div class="ck-menu-drop-divider"></div>
             <div class="ck-menu-drop-content-2">
                 <span class="ck-title">Account</span>
                 <div class="ck-account-menu-wrapper">
                     <ul class="ck-account-menu">
-                        <li class="ck-account-menu-item">Orders</li>
                         {% if user.is_authenticated %}
+                            <li class="ck-account-menu-item">
+                                <a href="{% url 'profile' user.pk %}" class="ck-account-menu-button">Profile</a>
+                            </li>
                             <li class="ck-account-menu-item">
                                 <a href="{% url 'logout' %}" class="ck-account-menu-button">Sign-Out</a>
                             </li>

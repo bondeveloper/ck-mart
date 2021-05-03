@@ -2,17 +2,25 @@ let updateBtn = document.getElementsByClassName('update-cart');
 
 for ( i = 0; i < updateBtn.length; i++ ) {
     updateBtn[i].addEventListener('click', function() {
-        const productId = this.dataset.product;
-        const action = this.dataset.action
+        let qty = null;
+        if( document.getElementsByName('product-qty').length > 0 ) {
+            qty = document.getElementsByName('product-qty')[0].value
+        }
+        const data = {
+            'productId': this.dataset.product,
+            'action': this.dataset.action,
+            'quantity': qty
+        }
+
         if ( user === 'AnonymousUser') {
-            addCookieItem( productId, action );
+            addCookieItem( data );
         }else {
-            updateUserOrder( productId, action );
+            updateUserOrder( data );
         }
     })
 }
 
-const updateUserOrder = ( productId, action ) => {
+const updateUserOrder = ( data ) => {
     const url = '/store/update_item/';
 
     fetch( url, {
@@ -21,10 +29,7 @@ const updateUserOrder = ( productId, action ) => {
             'Content-Type': 'application/json',
             'X-CSRFToken': csrftoken,
         },
-        body: JSON.stringify({
-            'productId': productId,
-            'action': action
-        })
+        body: JSON.stringify({...data})
     })
     .then( res => {
         return res.json()
@@ -34,21 +39,23 @@ const updateUserOrder = ( productId, action ) => {
     })
 }
 
-const addCookieItem = ( productId, action ) => {
-    console.log(`Product: ${productId}`)
-    console.log(`Action: ${action}`)
+const addCookieItem = ( data ) => {
+
+    productId = data["productId"];
+    quantity = data["quantity"];
+
     if ( action == 'add' ) {
         if ( cart[productId] == undefined) {
-            cart[productId] = { 'quantity': 1 };
+            cart[productId] = { 'quantity': quantity};
             
         }else {
-            cart[productId]['quantity'] += 1;
+            cart[productId]['quantity'] += quantity;
         }
     }
 
     if ( action == 'remove' ) {
         if ( cart[productId] != undefined) {
-            cart[productId]['quantity'] -= 1;
+            cart[productId]['quantity'] -= quantity;
 
             if( cart[productId]['quantity'] <= 0 ) {
                 delete cart[productId];

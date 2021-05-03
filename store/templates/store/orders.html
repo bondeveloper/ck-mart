@@ -1,0 +1,19 @@
+{% extends 'store/main.html' %}
+
+{% block content %}
+<div class="ck-orders-container">
+    <div class="ck-content-wrapper">
+        <div class="ck-orders-wrapper">
+            <span class="ck-title ck-title-2">Your Orders</span>
+            <div class="ck-orders-list-wrapper">
+            {% for order in orders %}
+                <a class="ck-orders-order-wrapper" href="{% url 'order' order.id %}">
+                    <span>{{ order }}</span>
+                    <span>{{ order.date_ordered }}</span>
+                </a>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

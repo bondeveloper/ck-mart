@@ -17,8 +17,17 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        {% block content %}
-        {% endblock %}  
+        <div class="accounts-wrapper">
+            <div class="container-wrapper">
+                <div class="auth-container">
+                    <a href="{% url 'store' %}" class="ck-button"><h1 class="ck-brand">CK Mart Logo</h1></a>
+                    {% block content %}
+                    {% endblock %} 
+                    <div class="ck-auth-line"></div>
+                </div>
+            </div>
+        </div>
+ 
 
         {% block scripts %}
         {% endblock %}

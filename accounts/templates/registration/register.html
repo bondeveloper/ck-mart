@@ -4,55 +4,47 @@
 {% endblock %}
 
 {% block content %}
-<div class="register-wrapper">
-    <div class="container-wrapper">
-        <div class="auth-container">
-            <h1 class="ck-brand">CK Mart Logo</h1>
-            <div class="auth-wrapper">
-                <div class="register-auth-panel">
+<div class="auth-wrapper">
+    <div class="register-auth-panel">
 
-                    <div class="ck-has-error">
-                        {% for key, error in form.errors.items %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                    <h3>Register</h3>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="form-group"> 
-                            {{ form.email.label }}
-                            {{ form.email }}
-                        </div>
-
-                        <div class="form-group"> 
-                            <label>Your Name</label>
-                            {{ form.first_name }}
-                        </div>
-
-                        <div class="form-group"> 
-                            {{ form.password1.label }}
-                            {{ form.password1 }}
-                        </div>
-                        <div class="form-group"> 
-                            <label>Re-enter password</label>
-                            {{ form.password2 }}
-                        </div>
-                        <button type="submit" class="ck-button ck-button-lg ck-button-primary">Continue</button>
-                    </form>
-                </div>
-            </div>
-            <div class="signup-connect-wrapper">
-                <div class="ck-connect-wrapper">
-                    <div class="ck-connect">
-                        <div class="ck-connect-line ck-margin-r line-sm"></div>
-                        <label class="ck-connect-label">Already have an Account?</label>
-                        <div class="ck-connect-line ck-margin-l line-sm"></div>
-                    </div> 
-                    <a class="ck-button ck-button-lg ck-button-default" href="{% url 'login' %}">Sign-In</a>
-                </div>
-            </div>
-            <div class="ck-auth-line"></div>
+        <div class="ck-has-error">
+            {% for key, error in form.errors.items %}
+                {{ error }}
+            {% endfor %}
         </div>
+        <h3>Register</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group"> 
+                {{ form.email.label }}
+                {{ form.email }}
+            </div>
+
+            <div class="form-group"> 
+                <label>Your Name</label>
+                {{ form.first_name }}
+            </div>
+
+            <div class="form-group"> 
+                {{ form.password1.label }}
+                {{ form.password1 }}
+            </div>
+            <div class="form-group"> 
+                <label>Re-enter password</label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit" class="ck-button ck-button-lg ck-button-primary">Continue</button>
+        </form>
+    </div>
+</div>
+<div class="signup-connect-wrapper">
+    <div class="ck-connect-wrapper">
+        <div class="ck-connect">
+            <div class="ck-connect-line ck-margin-r line-sm"></div>
+            <label class="ck-connect-label">Already have an Account?</label>
+            <div class="ck-connect-line ck-margin-l line-sm"></div>
+        </div> 
+        <a class="ck-button ck-button-lg ck-button-default" href="{% url 'login' %}">Sign-In</a>
     </div>
 </div>
 {% endblock %}

@@ -1,30 +1,30 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib import messages
-from accounts.forms import RegistrationForm
+from accounts.forms import RegistrationForm, AccountUpdateForm
+
+from .models import Account
 
 
-class AccountRegisterView( generic.CreateView ):
+class AccountRegisterView( CreateView ):
 
     form_class = RegistrationForm
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
     success_message = 'Account created'
 
-     
 
-def register( request ):
-    context = {}
-    return HttpResponse('Register')
+class AccountUpdateView( UpdateView ):
+    model = Account
+    form_class = AccountUpdateForm
+    template_name = 'accounts/profile.html'
+    success_url = reverse_lazy('store')
 
-def signin( request ):
-    context = {}
-    return render( request, 'accounts/signin.html', context )
 
-def signup( request ):
-    context = {}
-    return render( request, 'accounts/signup.html', context )
-
+def profile( request ):
+    form_class = AccountUpdateForm
+    context = {'user': request.user }
+    return render( request, 'accounts/profile.html', context)

@@ -10,13 +10,13 @@
 
                     <div class="user-info">
                         <div class="form-field">
-                            <input type="text" class="form-control" name="name" placeholder="Name ...">
+                            <input type="text" class="form-control" name="name" placeholder="Name ..." value="{{ user.first_name }}">
                         </div>
                         <div class="form-field">
-                          <input type="email" class="form-control" name="email" placeholder="Email ...">
+                          <input type="email" class="form-control" name="email" placeholder="Email ..." value="{{ user.email }}">
                         </div>
                         <div class="form-field">
-                            <input type="text" class="form-control" name="phone" placeholder="Phone ...">
+                            <input type="text" class="form-control" name="phone" placeholder="Phone ..." value="{{ user.phone }}">
                         </div>
                     </div>
                     <div class="shipping-info">
@@ -81,9 +81,9 @@
         }
     }
 
-    if ( user != 'AnonymousUser') {
+    {% comment %} if ( user != 'AnonymousUser') {
         document.getElementsByClassName('user-info')[0].classList.add(hiddenClassName);
-    }
+    } {% endcomment %}
 
     if ( canShip == 'False') {
         document.getElementsByClassName('form-wrapper')[0].classList.add(hiddenClassName);

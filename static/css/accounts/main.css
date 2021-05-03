@@ -71,6 +71,7 @@ body {
 .ck-brand {
     text-align: center;
     padding: 20px 0;
+    color: rgba(0, 78, 0, 1);
 }
 .ck-has-error {
     color: hsla(0, 100%, 50%, .7);
@@ -96,7 +97,6 @@ body {
     font-size: 12px;
 }
 
-
 .form-element {
     padding: 6px;
 }
@@ -113,6 +113,13 @@ body {
     text-align: center;
     align-items: flex-start;
     box-sizing: border-box;
+}
+
+.ck-button:link,
+.ck-button:hover,
+.ck-button:active,
+.ck-button:visited {
+    color: inherit !important;
 }
 
 .ck-button-lg {
