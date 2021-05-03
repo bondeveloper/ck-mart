@@ -27,3 +27,20 @@ Online platform that sells products that are inspired by Chinese and Korean dram
 * link payment to user account
 
 ## (View Site here)[]
+
+
+## Setup
+* clone the repo to your local
+* activate venv
+* make and run migrations by the running these commands
+
+```python
+python manage.py makemigrations
+python manage.py migrate
+```
+
+* run the server using the below command
+ ```python
+ python manage.py runserver
+ ```
+* #### congratulations #### Youe app is running at localhost:8000/store
