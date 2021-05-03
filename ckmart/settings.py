@@ -147,3 +147,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 AUTH_USER_MODEL = 'accounts.Account'
 LOGIN_REDIRECT_URL = 'store'
 LOGOUT_REDIRECT_URL = 'store'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
