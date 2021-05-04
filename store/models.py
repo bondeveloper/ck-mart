@@ -90,7 +90,6 @@ class OrderItem( models.Model ):
     date_added = models.DateField( auto_now_add=True )
 
     class Meta:
-        # models.UniqueConstraint(fields=['product', 'order'], name='unique_order_item')
         constraints = [
             models.UniqueConstraint(fields=['product', 'order'], name='unique_order_item')
         ]

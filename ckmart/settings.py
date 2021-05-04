@@ -141,8 +141,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_URL = '/images/'
+
 
 AUTH_USER_MODEL = 'accounts.Account'
 LOGIN_REDIRECT_URL = 'store'
