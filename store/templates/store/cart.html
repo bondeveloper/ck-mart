@@ -33,13 +33,13 @@
         </div>
         <div class="col-lg-4">
             <div class="box-element">
-                <a class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
+                <a class="ck-button ck-button-primary-outline " href="{% url 'store' %}">&#x2190; Continue Shopping</a>
                 <table class="table">
                     <tr>
                         <th><h5>Items: <strong> {{ order.get_cart_items }}</strong></h5></th>
                         <th><h5>Total: <strong>R {{ order.get_cart_total|floatformat:2 }}</strong></h5></th>
                         <th>
-                            <a class="btn btn-primary" style="float: right; margin: 5px;" href="{% url 'checkout' %}">Checkout</a>
+                            <a class="ck-button ck-button-primary ck-button-lg ck-float-r" style="float: right; margin: 5px;" href="{% url 'checkout' %}">Checkout</a>
                         </th>
                     </tr>
                 </table>
