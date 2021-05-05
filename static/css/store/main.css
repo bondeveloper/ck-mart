@@ -369,18 +369,16 @@ h1,h2,h3,h4,h5,h6{
 	position: relative;
 	width: 40%;
 	height: 100%;
+	text-align: center;
 }
 
 .ck-store-product-brand-wrapper a{
-	position: absolute;
-	width: 100%;
 	height: 100%;
 }
 
 
 .ck-store-product-brand-wrapper img {
-	position: absolute;
-	width: 100%;
+	width: 200px;
 	height: 100%;
 	padding: 10px;
 }
