@@ -32,7 +32,9 @@ Online platform that sells products that are inspired by Chinese and Korean dram
 ## Setup
 * clone the repo to your local
 * copy .env.example to /ckmart/.env
-* activate venv
+* create and activate a virtual environment to isolate our package dependencies locally
+ * python3 -m venv env
+ * source env/bin/activate  # On Windows use `env\Scripts\activate` 
 * make and run migrations by the running these commands
 
 ```python
